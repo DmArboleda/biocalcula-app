@@ -82,3 +82,14 @@ Para clonar y ejecutar este proyecto localmente, asegúrate de contar con los si
 ## 📊 Estado Actual del Proyecto
 * **Fase Actual:** Configuración inicial del entorno, vinculación exitosa al repositorio Git e implementación de las vistas XML base (`activity_main.xml`).
 * **Próximo Paso:** Inyección de dependencias de Room para el almacenamiento persistente e interconexión de controladores Java.
+
+  ## Funcionalidades implementadas
+
+- ✅ Pantalla de bienvenida con navegación a Registro e Inicio de sesión
+- ✅ Registro de usuario con validación de nombre, correo (regex), contraseña y confirmación
+- ✅ Almacenamiento local de usuarios con Room Database
+- ✅ Login con verificación de credenciales contra la base de datos local
+- ✅ Validación de formularios en tiempo real con mensajes de error específicos por campo
+- ✅ Navegación segura tras autenticación (no permite regresar al login con el botón Atrás)
+- ✅ Arquitectura MVVM con separación de capas (UI, lógica de negocio, datos)
+- ✅ Diseño de interfaz con Material Design 3
