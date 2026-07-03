@@ -50,4 +50,7 @@ dependencies {
 
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
+
+    // WorkManager — notificaciones programadas
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
 }
