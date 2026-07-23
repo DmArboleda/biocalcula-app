@@ -29,7 +29,7 @@
 
         <activity
             android:name=".ui.activities.LoginActivity"
-            android:exported="false"
+            android:exported="true"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
@@ -37,21 +37,54 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
-        <!-- MainActivity: pantalla principal post-login + WorkManager -->
+        <!-- Pantalla 1: Datos Biométricos (onboarding) -->
         <activity
-            android:name=".ui.activities.MainActivity"
+            android:name=".ui.activities.DatosBiometricosActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- Pantalla 2: Selección de Objetivo -->
+        <activity
+            android:name=".ui.activities.ObjetivoActivity"
             android:exported="false" />
 
-        <!-- Historial de peso con FAB, edición y eliminación -->
+        <!-- Pantalla 3: Dashboard Principal -->
+        <activity
+            android:name=".ui.activities.DashboardActivity"
+            android:exported="false" />
+
+        <!-- Pantalla 4: Historial y Reporte Semanal -->
         <activity
             android:name=".ui.activities.HistorialActivity"
             android:exported="false" />
 
-        <!-- Formulario reutilizable: modo CREATE y modo EDIT -->
+        <!-- Pantalla 5: Perfil del Usuario -->
+        <activity
+            android:name=".ui.activities.PerfilActivity"
+            android:exported="false" />
+
+        <!-- Pantalla de registro de consumo diario (abierta desde notificación nocturna) -->
+        <activity
+            android:name=".ui.activities.RegistroConsumoActivity"
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- MainActivity: pantalla de transición + WorkManager (legacy) -->
+        <activity
+            android:name=".ui.activities.MainActivity"
+            android:exported="false" />
+
+        <!-- Formulario reutilizable: modo CREATE y modo EDIT para peso -->
         <activity
             android:name=".ui.activities.FormularioPesoActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+
+        <!-- WorkManager: notificaciones programadas -->
+        <service
+            android:name="androidx.work.impl.foreground.SystemForegroundService"
+            android:foregroundServiceType="shortService"
+            tools:node="merge" />
 
     </application>
 
