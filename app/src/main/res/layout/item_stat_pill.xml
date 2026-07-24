@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="95%"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/color_text_primary"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Precisión"
-        android:textColor="#C8E6C9"
+        android:textColor="@color/color_primary"
         android:textSize="10sp" />
 
 </LinearLayout>

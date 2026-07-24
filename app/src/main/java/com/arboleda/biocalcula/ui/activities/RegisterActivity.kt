@@ -11,6 +11,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.arboleda.biocalcula.R
 import com.arboleda.biocalcula.data.db.AppDatabase
 import com.arboleda.biocalcula.data.model.Usuario
+import com.arboleda.biocalcula.util.SessionManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -76,6 +77,7 @@ class RegisterActivity : AppCompatActivity() {
         val password = etPassword.text.toString().trim()
 
         val db = AppDatabase.getDatabase(applicationContext)
+        val session = SessionManager(this)
 
         lifecycleScope.launch {
             val existente = withContext(Dispatchers.IO) {
@@ -87,17 +89,23 @@ class RegisterActivity : AppCompatActivity() {
                 return@launch
             }
 
-            withContext(Dispatchers.IO) {
+            // Insertar y obtener el ID generado
+            val nuevoId = withContext(Dispatchers.IO) {
                 db.usuarioDao().insertarUsuario(
                     Usuario(nombre = nombre, correo = correo, contrasena = password)
                 )
             }
 
-            Toast.makeText(this@RegisterActivity, "Cuenta creada con éxito", Toast.LENGTH_SHORT).show()
+            // Guardar sesión con el ID real del nuevo usuario
+            session.guardarSesion(nuevoId.toInt())
 
-            val intent = Intent(this@RegisterActivity, MainActivity::class.java)
+            Toast.makeText(this@RegisterActivity, "¡Cuenta creada! Completa tu perfil", Toast.LENGTH_SHORT).show()
+
+            // → Ir a Datos Biométricos (primer paso del onboarding)
+            val intent = Intent(this@RegisterActivity, DatosBiometricosActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
         }
     }
 }
+

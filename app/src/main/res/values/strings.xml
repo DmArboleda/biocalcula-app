@@ -1,3 +1,76 @@
 <resources>
     <string name="app_name">BioCalcula</string>
+
+    <!-- Navegación -->
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_historial">Historial</string>
+    <string name="nav_perfil">Perfil</string>
+
+    <!-- Datos Biométricos -->
+    <string name="titulo_datos_biometricos">Datos Biométricos</string>
+    <string name="subtitulo_datos_biometricos">Necesitamos estos datos para calcular tu plan nutricional personalizado</string>
+    <string name="hint_peso">Peso (kg)</string>
+    <string name="hint_talla">Talla (cm)</string>
+    <string name="hint_edad">Edad (años)</string>
+    <string name="label_sexo">Sexo biológico</string>
+    <string name="masculino">Masculino</string>
+    <string name="femenino">Femenino</string>
+    <string name="btn_continuar">Continuar →</string>
+
+    <!-- Objetivo -->
+    <string name="titulo_objetivo">Tu Objetivo</string>
+    <string name="subtitulo_objetivo">¿Cuál es tu meta principal?</string>
+    <string name="obj_perder_grasa">Perder Grasa</string>
+    <string name="obj_mantener">Mantener Peso</string>
+    <string name="obj_ganar_musculo">Ganar Masa Muscular</string>
+    <string name="desc_perder_grasa">Déficit calórico de 300 kcal para quemar grasa de forma sostenible</string>
+    <string name="desc_mantener">Calorías exactas para mantener tu peso actual</string>
+    <string name="desc_ganar_musculo">Superávit de 300 kcal para construir músculo eficientemente</string>
+    <string name="btn_ver_macros">Ver mis macros →</string>
+
+    <!-- Dashboard -->
+    <string name="titulo_dashboard">Mi Plan Nutricional</string>
+    <string name="label_calorias_diarias">Calorías diarias</string>
+    <string name="label_kcal">kcal</string>
+    <string name="label_proteinas">Proteínas</string>
+    <string name="label_carbohidratos">Carbohidratos</string>
+    <string name="label_grasas">Grasas</string>
+    <string name="label_agua">Agua</string>
+    <string name="sufijo_gramos">g</string>
+    <string name="sufijo_litros">L</string>
+    <string name="checklist_titulo">Checklist del día</string>
+    <string name="check_proteinas">✓ Cumplí mi meta de Proteínas</string>
+    <string name="check_carbos">✓ Cumplí mi meta de Carbohidratos</string>
+    <string name="check_grasas">✓ Cumplí mi meta de Grasas</string>
+    <string name="check_agua">✓ Cumplí mi meta de Agua</string>
+    <string name="btn_guardar_dia">Guardar día</string>
+    <string name="dia_completado">¡Día completado! ✅</string>
+
+    <!-- Historial -->
+    <string name="titulo_historial">Historial</string>
+    <string name="titulo_registro_peso">Registro de Peso</string>
+    <string name="titulo_reporte_semanal">Reporte Semanal</string>
+    <string name="dias_cumplidos">días</string>
+
+    <!-- Perfil -->
+    <string name="titulo_perfil">Mi Perfil</string>
+    <string name="btn_editar_datos">Editar datos biométricos</string>
+    <string name="label_nombre">Nombre</string>
+    <string name="label_objetivo_activo">Objetivo activo</string>
+    <string name="label_peso_actual">Peso actual</string>
+    <string name="label_talla">Talla</string>
+    <string name="label_edad">Edad</string>
+    <string name="label_sexo_perfil">Sexo</string>
+    <string name="notificaciones">Notificaciones</string>
+    <string name="btn_actualizar_peso">Actualizar peso</string>
+    <string name="sin_datos">Sin datos</string>
+    <string name="btn_guardar_objetivo">Ver mis macros →</string>
+
+    <!-- Notificaciones -->
+    <string name="notif_checklist_titulo">¿Marcaste tus macros hoy?</string>
+    <string name="notif_checklist_texto">Revisa tu progreso diario en BioCalcula 💪</string>
+    <string name="notif_pesaje_titulo">¡Es lunes! Registra tu peso</string>
+    <string name="notif_pesaje_texto">Actualiza tu peso para ajustar tus macros semanales</string>
+    <string name="notif_resumen_titulo">Tu resumen semanal está listo</string>
+    <string name="notif_resumen_texto">Revisa cuántos días cumpliste tus metas esta semana</string>
 </resources>

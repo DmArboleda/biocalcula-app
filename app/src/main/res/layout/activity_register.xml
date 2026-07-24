@@ -4,45 +4,82 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F7F2"
+    android:background="@color/color_background"
     tools:context=".RegisterActivity">
 
-    <!-- Barra superior verde -->
+    <!-- Barra superior con degradado verde -->
     <LinearLayout
         android:id="@+id/topBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#2E7D32"
+        android:background="@color/color_surface"
         android:orientation="vertical"
         android:paddingHorizontal="20dp"
         android:paddingTop="40dp"
-        android:paddingBottom="16dp"
+        android:paddingBottom="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="BioCalcula"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:text="Crear cuenta"
-            android:textColor="#C8E6C9"
-            android:textSize="13sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BC"
+                android:textColor="@color/color_primary"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:background="@drawable/bg_avatar"
+                android:gravity="center"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="12dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="BioCalcula"
+                    android:textColor="@color/color_text_primary"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Crear cuenta"
+                    android:textColor="@color/color_primary"
+                    android:textSize="13sp" />
+            </LinearLayout>
+        </LinearLayout>
 
     </LinearLayout>
+
+    <!-- Línea separadora de acento -->
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:background="@color/color_primary"
+        app:layout_constraintTop_toBottomOf="@id/topBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/topBar"
+        app:layout_constraintTop_toBottomOf="@id/divider"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -57,7 +94,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="¡Bienvenido!"
-                android:textColor="#1B5E20"
+                android:textColor="@color/color_primary"
                 android:textSize="19sp"
                 android:textStyle="bold" />
 
@@ -67,7 +104,7 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="20dp"
                 android:text="Crea tu cuenta para empezar a calcular tus macros"
-                android:textColor="#777777"
+                android:textColor="@color/color_text_secondary"
                 android:textSize="13sp" />
 
             <!-- Nombre completo -->
@@ -76,14 +113,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nombre completo"
-                app:boxStrokeColor="#2E7D32"
-                app:hintTextColor="#2E7D32">
+                app:boxStrokeColor="@color/color_primary"
+                app:hintTextColor="@color/color_primary"
+                app:boxBackgroundColor="@color/color_surface_variant">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etFullName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPersonName" />
+                    android:inputType="textPersonName"
+                    android:textColor="@color/color_text_primary" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -94,14 +133,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:hint="Correo electrónico"
-                app:boxStrokeColor="#2E7D32"
-                app:hintTextColor="#2E7D32">
+                app:boxStrokeColor="@color/color_primary"
+                app:hintTextColor="@color/color_primary"
+                app:boxBackgroundColor="@color/color_surface_variant">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/color_text_primary" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -112,16 +153,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:hint="Contraseña"
-                app:boxStrokeColor="#2E7D32"
+                app:boxStrokeColor="@color/color_primary"
                 app:endIconMode="password_toggle"
-                app:endIconTint="#2E7D32"
-                app:hintTextColor="#2E7D32">
+                app:endIconTint="@color/color_primary"
+                app:hintTextColor="@color/color_primary"
+                app:boxBackgroundColor="@color/color_surface_variant">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:textColor="@color/color_text_primary" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -130,7 +173,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="Mínimo 8 caracteres"
-                android:textColor="#999999"
+                android:textColor="@color/color_text_tertiary"
                 android:textSize="11sp" />
 
             <!-- Confirmar contraseña -->
@@ -140,16 +183,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:hint="Confirmar contraseña"
-                app:boxStrokeColor="#2E7D32"
+                app:boxStrokeColor="@color/color_primary"
                 app:endIconMode="password_toggle"
-                app:endIconTint="#2E7D32"
-                app:hintTextColor="#2E7D32">
+                app:endIconTint="@color/color_primary"
+                app:hintTextColor="@color/color_primary"
+                app:boxBackgroundColor="@color/color_surface_variant">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etConfirmPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:textColor="@color/color_text_primary" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -159,11 +204,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginTop="24dp"
-                android:backgroundTint="#2E7D32"
+                app:backgroundTint="@color/color_primary"
                 android:text="Crear cuenta"
                 android:textAllCaps="false"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/white"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 app:cornerRadius="28dp" />
 
             <!-- Enlace a login -->
@@ -175,8 +221,9 @@
                 android:layout_marginTop="16dp"
                 android:padding="8dp"
                 android:text="¿Ya tienes cuenta? Iniciar sesión"
-                android:textColor="#555555"
-                android:textSize="13sp" />
+                android:textColor="@color/color_teal"
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <!-- Términos -->
             <TextView
@@ -185,7 +232,7 @@
                 android:layout_marginTop="12dp"
                 android:gravity="center"
                 android:text="Al registrarte aceptas nuestros Términos de uso y Política de privacidad"
-                android:textColor="#999999"
+                android:textColor="@color/color_text_tertiary"
                 android:textSize="11sp"
                 android:lineSpacingExtra="2dp" />
 

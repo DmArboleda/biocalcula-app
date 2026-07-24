@@ -9,36 +9,56 @@ import android.app.Application
 /**
  * Clase Application de BioCalcula.
  *
- * Se ejecuta antes que cualquier Activity. Aquí registramos el canal de
- * notificaciones requerido desde Android 8.0 (Oreo / API 26).
+ * Se ejecuta antes que cualquier Activity. Aquí registramos los dos canales
+ * de notificaciones requeridos desde Android 8.0 (Oreo / API 26):
  *
- * ¿Por qué canales? Google los introdujo en Android 8 para que el usuario
- * pueda controlar finamente qué tipos de alertas desea ver de cada app,
- * sin tener que silenciarla completamente.
+ *  - CHANNEL_RUTINA: recordatorio diario de macros + agua (hora nocturna configurable)
+ *  - CHANNEL_PESO:   recordatorio semanal de pesaje (intervalo configurable)
+ *
+ * ¿Por qué dos canales separados? El usuario puede controlarlos de forma
+ * independiente desde los ajustes del sistema (silenciar uno sin afectar el otro).
  */
 class BioCalculaApp : Application() {
 
     companion object {
-        const val CHANNEL_ID = "biocalcula_recordatorios"
+        /** Canal para el recordatorio nocturno diario (macros + agua). */
+        const val CHANNEL_RUTINA = "biocalcula_rutina"
+
+        /** Canal para el recordatorio semanal de pesaje. */
+        const val CHANNEL_PESO = "biocalcula_peso"
+
+        /** @deprecated Usar CHANNEL_RUTINA o CHANNEL_PESO según el tipo. */
+        const val CHANNEL_ID = CHANNEL_RUTINA
     }
 
     override fun onCreate() {
         super.onCreate()
-        crearCanalNotificaciones()
+        crearCanalesNotificaciones()
     }
 
-    private fun crearCanalNotificaciones() {
+    private fun crearCanalesNotificaciones() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val nombre = "Recordatorios de Progreso"
-            val descripcion = "Canal para alertas de pesaje semanal y metas nutricionales"
-            val importancia = NotificationManager.IMPORTANCE_DEFAULT
+            val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-            val canal = NotificationChannel(CHANNEL_ID, nombre, importancia).apply {
-                description = descripcion
+            // Canal 1: Rutina diaria de macros y agua
+            NotificationChannel(
+                CHANNEL_RUTINA,
+                "Rutina diaria de macros",
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply {
+                description = "Recordatorio nocturno para registrar tu consumo de macros y agua del día"
+                manager.createNotificationChannel(this)
             }
 
-            val manager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            manager.createNotificationChannel(canal)
+            // Canal 2: Pesaje semanal
+            NotificationChannel(
+                CHANNEL_PESO,
+                "Recordatorio de peso",
+                NotificationManager.IMPORTANCE_DEFAULT
+            ).apply {
+                description = "Recordatorio periódico para registrar tu peso y ajustar tus macros"
+                manager.createNotificationChannel(this)
+            }
         }
     }
 }

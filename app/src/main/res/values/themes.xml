@@ -1,9 +1,88 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.BioCalcula" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+    <style name="Base.Theme.BioCalcula" parent="Theme.Material3.Dark.NoActionBar">
+        <!-- Verde esmeralda principal -->
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorOnPrimary">@color/color_on_primary</item>
+        <item name="colorPrimaryContainer">@color/color_green_dark</item>
+        <item name="colorOnPrimaryContainer">@color/color_green_light</item>
+
+        <!-- Celeste como secundario -->
+        <item name="colorSecondary">@color/color_teal</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorSecondaryContainer">#2000C896</item>
+
+        <!-- Proteína como terciario -->
+        <item name="colorTertiary">@color/color_proteina</item>
+
+        <!-- Fondos oscuros unificados -->
+        <item name="android:colorBackground">@color/color_background</item>
+        <item name="colorSurface">@color/color_surface</item>
+        <item name="colorSurfaceVariant">@color/color_surface_variant</item>
+        <item name="colorOutline">@color/color_outline</item>
+
+        <!-- Texto claro -->
+        <item name="android:textColorPrimary">@color/color_text_primary</item>
+        <item name="android:textColorSecondary">@color/color_text_secondary</item>
+        <item name="android:windowBackground">@color/color_background</item>
+
+        <!-- StatusBar y NavigationBar oscuros -->
+        <item name="android:statusBarColor">@color/color_background</item>
+        <item name="android:navigationBarColor">@color/color_surface</item>
     </style>
 
     <style name="Theme.BioCalcula" parent="Base.Theme.BioCalcula" />
+
+    <!-- ===== ESTILOS DE TARJETAS ===== -->
+
+    <!-- Tarjeta estándar -->
+    <style name="BioCalcula.Card" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardBackgroundColor">@color/color_surface</item>
+        <item name="cardCornerRadius">20dp</item>
+        <item name="cardElevation">4dp</item>
+    </style>
+
+    <!-- Tarjeta con borde de acento verde -->
+    <style name="BioCalcula.Card.Accent" parent="Widget.Material3.CardView.Outlined">
+        <item name="cardBackgroundColor">@color/color_surface</item>
+        <item name="cardCornerRadius">20dp</item>
+        <item name="strokeColor">@color/color_primary</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <!-- Tarjeta de objetivo -->
+    <style name="BioCalcula.ObjetivoCard" parent="Widget.Material3.CardView.Outlined">
+        <item name="cardBackgroundColor">@color/color_surface_variant</item>
+        <item name="cardCornerRadius">20dp</item>
+        <item name="strokeColor">@color/color_outline</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <!-- ===== ESTILOS DE BOTONES ===== -->
+
+    <!-- Botón principal verde esmeralda -->
+    <style name="BioCalcula.Button.Primary" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/color_primary</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="cornerRadius">14dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Botón secundario outlined celeste -->
+    <style name="BioCalcula.Button.Secondary" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="strokeColor">@color/color_teal</item>
+        <item name="android:textColor">@color/color_teal</item>
+        <item name="cornerRadius">14dp</item>
+    </style>
+
+    <!-- ===== ESTILOS DE INPUTS ===== -->
+
+    <!-- Input unificado oscuro con acento verde -->
+    <style name="BioCalcula.TextInput" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/color_primary</item>
+        <item name="hintTextColor">@color/color_primary</item>
+        <item name="boxBackgroundColor">@color/color_surface_variant</item>
+        <item name="android:textColorHint">@color/color_text_tertiary</item>
+    </style>
+
 </resources>

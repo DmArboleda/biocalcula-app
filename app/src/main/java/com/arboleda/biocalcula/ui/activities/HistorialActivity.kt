@@ -2,6 +2,7 @@ package com.arboleda.biocalcula.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,46 +10,130 @@ import androidx.recyclerview.widget.RecyclerView
 import com.arboleda.biocalcula.R
 import com.arboleda.biocalcula.data.model.RegistroPeso
 import com.arboleda.biocalcula.ui.adapter.RegistroPesoAdapter
-import com.arboleda.biocalcula.viewmodel.RegistroPesoViewModel
+import com.arboleda.biocalcula.viewmodel.HistorialViewModel
+import com.github.mikephil.charting.charts.BarChart
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 
 /**
- * Pantalla de Historial de Peso.
+ * Pantalla 4 — Historial y Reporte Semanal.
  *
- * Patrones UX implementados:
+ * Sección A — Reporte semanal:
+ *   - BarChart (MPAndroidChart) mostrando días cumplidos por macro
+ *   - Chip con el porcentaje general de cumplimiento
+ *   - TextViews mostrando X/7 días para cada macro
  *
- * ① EDITAR: Click normal en un ítem → abre FormularioPesoActivity en modo EDIT
- *    con los datos precargados. El usuario no tiene que recordar el valor anterior.
+ * Sección B — Historial de Peso:
+ *   - RecyclerView con registros cronológicos de pesaje
+ *   - FAB "+" para agregar nuevo pesaje
+ *   - Editar (click) y Eliminar con confirmación (long click)
  *
- * ② ELIMINAR con confirmación: Long click → MaterialAlertDialog (bloquea la acción
- *    destructiva accidental). Si confirma → Snackbar con "Deshacer" (red de seguridad
- *    inmediata sin interrumpir el flujo con otro diálogo).
- *
- * ③ CREAR: FAB "+" en la esquina → abre FormularioPesoActivity en modo CREATE.
+ * Conectado a la barra de navegación inferior.
  */
 class HistorialActivity : AppCompatActivity() {
 
-    private val viewModel: RegistroPesoViewModel by viewModels()
+    private val viewModel: HistorialViewModel by viewModels()
+
+    private lateinit var chipPorcentaje: Chip
+    private lateinit var barChart: BarChart
+    private lateinit var tvDiasProteina: TextView
+    private lateinit var tvDiasCarbos: TextView
+    private lateinit var tvDiasGrasas: TextView
+    private lateinit var tvDiasAgua: TextView
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var fab: FloatingActionButton
+    private lateinit var bottomNav: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_historial)
 
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        val fab = findViewById<FloatingActionButton>(R.id.fabNuevoRegistro)
+        inicializarVistas()
+        configurarNavegacion()
+        configurarBarChart()
+        configurarRecyclerView()
+        observarViewModel()
 
-        // ── Adapter con callbacks de editar y eliminar ────────────────────────
+        viewModel.cargarReporteSemanal()
+    }
+
+    private fun inicializarVistas() {
+        chipPorcentaje  = findViewById(R.id.chipPorcentaje)
+        barChart        = findViewById(R.id.barChart)
+        tvDiasProteina  = findViewById(R.id.tvDiasProteina)
+        tvDiasCarbos    = findViewById(R.id.tvDiasCarbos)
+        tvDiasGrasas    = findViewById(R.id.tvDiasGrasas)
+        tvDiasAgua      = findViewById(R.id.tvDiasAgua)
+        recyclerView    = findViewById(R.id.recyclerView)
+        fab             = findViewById(R.id.fabNuevoRegistro)
+        bottomNav       = findViewById(R.id.bottomNav)
+    }
+
+    private fun configurarNavegacion() {
+        bottomNav.selectedItemId = R.id.nav_historial
+        bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_historial -> true
+                R.id.nav_dashboard -> {
+                    startActivity(Intent(this, DashboardActivity::class.java))
+                    false
+                }
+                R.id.nav_perfil -> {
+                    startActivity(Intent(this, PerfilActivity::class.java))
+                    false
+                }
+                else -> false
+            }
+        }
+    }
+
+    /** Configura el aspecto visual del BarChart antes de cargar datos. */
+    private fun configurarBarChart() {
+        barChart.apply {
+            description.isEnabled = false
+            legend.isEnabled      = false
+            setDrawGridBackground(false)
+            setFitBars(true)
+            setScaleEnabled(false)
+            animateY(800)
+
+            xAxis.apply {
+                position         = XAxis.XAxisPosition.BOTTOM
+                granularity      = 1f
+                setDrawGridLines(false)
+                textColor        = getColor(R.color.color_text_secondary)
+                textSize         = 11f
+                valueFormatter   = IndexAxisValueFormatter(
+                    arrayOf("Prot.", "Carbos", "Grasas", "Agua")
+                )
+            }
+            axisLeft.apply {
+                axisMinimum  = 0f
+                axisMaximum  = 7f
+                granularity  = 1f
+                textColor    = getColor(R.color.color_text_secondary)
+                textSize     = 11f
+            }
+            axisRight.isEnabled = false
+        }
+    }
+
+    private fun configurarRecyclerView() {
         val adapter = RegistroPesoAdapter(
             onEditar = { registro ->
-                // Click normal → modo EDIT: pasar el ID al formulario
                 val intent = Intent(this, FormularioPesoActivity::class.java)
                 intent.putExtra(FormularioPesoActivity.EXTRA_REGISTRO_ID, registro.id_registro)
                 startActivity(intent)
             },
             onEliminar = { registro ->
-                // Long click → diálogo de confirmación (Material Design 3)
                 confirmarEliminacion(registro)
             }
         )
@@ -56,43 +141,79 @@ class HistorialActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        // ── Observer de Room → actualiza la lista en tiempo real ──────────────
         viewModel.todosLosRegistros.observe(this) { lista ->
             adapter.submitList(lista)
         }
 
-        // ── FAB → modo CREATE (sin ID extra) ──────────────────────────────────
         fab.setOnClickListener {
             startActivity(Intent(this, FormularioPesoActivity::class.java))
         }
     }
 
-    /**
-     * Muestra un AlertDialog de Material Design 3 para confirmar la eliminación.
-     *
-     * Patrón UX — ¿cuándo usar AlertDialog?
-     * Para acciones DESTRUCTIVAS e irreversibles. El diálogo interrumpe el flujo
-     * deliberadamente para que el usuario confirme conscientemente antes de perder datos.
-     *
-     * Patrón UX — ¿cuándo usar Snackbar "Deshacer"?
-     * Como red de seguridad posterior. Permite revertir sin usar un segundo diálogo,
-     * agilizando la experiencia: el usuario elimina rápido y puede arrepentirse sin fricción.
-     */
+    private fun observarViewModel() {
+        viewModel.reporteSemanal.observe(this) { reporte ->
+            if (reporte == null) {
+                // Sin datos esta semana
+                chipPorcentaje.text = "0%"
+                tvDiasProteina.text = "0/7"
+                tvDiasCarbos.text   = "0/7"
+                tvDiasGrasas.text   = "0/7"
+                tvDiasAgua.text     = "0/7"
+                barChart.clear()
+                barChart.invalidate()
+                return@observe
+            }
+
+            val total = reporte.totalDiasEvaluados
+            chipPorcentaje.text = "${reporte.porcentajeGeneral}%"
+            tvDiasProteina.text = "${reporte.diasProteina}/$total"
+            tvDiasCarbos.text   = "${reporte.diasCarbos}/$total"
+            tvDiasGrasas.text   = "${reporte.diasGrasas}/$total"
+            tvDiasAgua.text     = "${reporte.diasAgua}/$total"
+
+            actualizarBarChart(reporte.diasProteina, reporte.diasCarbos,
+                               reporte.diasGrasas, reporte.diasAgua)
+        }
+    }
+
+    private fun actualizarBarChart(
+        proteina: Int, carbos: Int, grasas: Int, agua: Int
+    ) {
+        val entries = listOf(
+            BarEntry(0f, proteina.toFloat()),
+            BarEntry(1f, carbos.toFloat()),
+            BarEntry(2f, grasas.toFloat()),
+            BarEntry(3f, agua.toFloat())
+        )
+
+        val colors = listOf(
+            getColor(R.color.color_proteina),
+            getColor(R.color.color_carbos),
+            getColor(R.color.color_grasas),
+            getColor(R.color.color_agua)
+        )
+
+        val dataSet = BarDataSet(entries, "Días cumplidos").apply {
+            this.colors    = colors
+            valueTextColor = getColor(R.color.color_text_primary)
+            valueTextSize  = 12f
+        }
+
+        barChart.data = BarData(dataSet).apply { barWidth = 0.5f }
+        barChart.invalidate()
+    }
+
+    /** Confirmación antes de eliminar un registro de peso. */
     private fun confirmarEliminacion(registro: RegistroPeso) {
         MaterialAlertDialogBuilder(this)
             .setTitle("¿Eliminar registro de peso?")
-            .setMessage("Se borrará el registro de ${registro.peso_registrado} kg del ${registro.fecha_registro}. Esta acción alterará tu historial de progreso.")
+            .setMessage("Se borrará el registro de ${registro.peso_registrado} kg del ${registro.fecha_registro}.")
             .setIcon(android.R.drawable.ic_dialog_alert)
             .setNegativeButton("Cancelar", null)
             .setPositiveButton("Eliminar") { _, _ ->
-                // Ejecutar el borrado en Room vía ViewModel
                 viewModel.eliminar(registro)
-
-                // Snackbar con acción "Deshacer" — permite recuperar si fue accidental
-                val rootView = findViewById<RecyclerView>(R.id.recyclerView)
-                Snackbar.make(rootView, "Registro eliminado", Snackbar.LENGTH_LONG)
+                Snackbar.make(recyclerView, "Registro eliminado", Snackbar.LENGTH_LONG)
                     .setAction("Deshacer") {
-                        // Re-insertar el registro exacto (con su fecha original)
                         viewModel.insertar(registro)
                     }
                     .setActionTextColor(getColor(android.R.color.holo_green_light))

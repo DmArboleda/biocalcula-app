@@ -1,5 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- ===== COLORES PRINCIPALES ===== -->
+    <!-- Verde esmeralda (acento principal) -->
+    <color name="color_primary">#00C896</color>
+    <color name="color_primary_dark">#009E76</color>
+    <color name="color_primary_light">#33D4A8</color>
+    <color name="color_on_primary">#FFFFFF</color>
+
+    <!-- Verde oscuro del login (acento secundario) -->
+    <color name="color_green_dark">#2E7D32</color>
+    <color name="color_green_medium">#388E3C</color>
+    <color name="color_green_light">#C8E6C9</color>
+
+    <!-- Celeste / Teal (terciario) -->
+    <color name="color_teal">#00838F</color>
+    <color name="color_teal_light">#B2EBF2</color>
+
+    <!-- ===== FONDOS Y SUPERFICIES (Tema Azul Marino / Navy) ===== -->
+    <color name="color_background">#0F172A</color>
+    <color name="color_surface">#1E293B</color>
+    <color name="color_surface_variant">#334155</color>
+    <color name="color_outline">#475569</color>
+
+    <!-- ===== TEXTO ===== -->
+    <color name="color_text_primary">#F8FAFC</color>
+    <color name="color_text_secondary">#94A3B8</color>
+    <color name="color_text_tertiary">#64748B</color>
+
+    <!-- ===== MACRONUTRIENTES ===== -->
+    <color name="color_proteina">#FF6B6B</color>
+    <color name="color_proteina_light">#3DFF6B6B</color>
+    <color name="color_carbos">#FFD166</color>
+    <color name="color_carbos_light">#3DFFD166</color>
+    <color name="color_grasas">#06D6A0</color>
+    <color name="color_grasas_light">#3D06D6A0</color>
+    <color name="color_agua">#118AB2</color>
+    <color name="color_agua_light">#3D118AB2</color>
+
+    <!-- ===== OBJETIVOS ===== -->
+    <color name="color_perder_grasa">#FF6B6B</color>
+    <color name="color_mantener">#FFD166</color>
+    <color name="color_ganar_musculo">#00C896</color>
+
+    <!-- ===== ESTADOS ===== -->
+    <color name="color_success">#00C896</color>
+    <color name="color_warning">#FFD166</color>
+    <color name="color_error">#FF6B6B</color>
+
+    <!-- ===== BÁSICOS ===== -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="transparent">#00000000</color>
 </resources>

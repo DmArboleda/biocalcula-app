@@ -11,6 +11,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.arboleda.biocalcula.R
 import com.arboleda.biocalcula.data.db.AppDatabase
+import com.arboleda.biocalcula.util.SessionManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -78,13 +79,27 @@ class LoginActivity : AppCompatActivity() {
         val password = etPassword.text.toString().trim()
 
         val db = AppDatabase.getDatabase(applicationContext)
+        val session = SessionManager(this)
 
         lifecycleScope.launch {
             val usuario = withContext(Dispatchers.IO) {
                 db.usuarioDao().login(email, password)
             }
             if (usuario != null) {
-                val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                // Guardar sesión con el ID del usuario
+                session.guardarSesion(usuario.id_usuario)
+
+                // Decidir a dónde ir según el estado del onboarding
+                val destino = if (usuario.peso != null && usuario.objetivo != null) {
+                    // Ya completó el onboarding → Dashboard
+                    session.marcarOnboardingCompleto()
+                    DashboardActivity::class.java
+                } else {
+                    // Primera vez → Datos Biométricos
+                    DatosBiometricosActivity::class.java
+                }
+
+                val intent = Intent(this@LoginActivity, destino)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
             } else {
@@ -94,3 +109,4 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 }
+

@@ -68,12 +68,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * MODO DEMO: Programa un Worker que se ejecuta en 1 minuto.
+     * MODO DEMO: Programa un Worker que se ejecuta en 45 segundos.
      * Al terminar, el propio Worker se volverá a programar.
      */
     private fun programarRecordatorioDiario() {
         val solicitud = OneTimeWorkRequestBuilder<RecordatorioPesoWorker>()
-            .setInitialDelay(1, TimeUnit.MINUTES)
+            .setInitialDelay(45, TimeUnit.SECONDS)
             .build()
 
         WorkManager.getInstance(this).enqueueUniqueWork(
